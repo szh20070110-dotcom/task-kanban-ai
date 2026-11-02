@@ -45,6 +45,9 @@ function isToday(timestamp) {
       </div>
 
       <div class="stats-head-actions">
+        <span class="stats-streak" data-test="stats-streak" title="连续打卡：从今天或昨天往回数，连续有完成任务的天数">
+          🔥 连续 {{ stats.streakDays }} 天
+        </span>
         <span class="stats-badge">WEEKLY</span>
         <button
           type="button"
@@ -206,6 +209,16 @@ function isToday(timestamp) {
   letter-spacing: 0.12em;
   color: var(--color-primary-hover);
   background: var(--color-primary-soft);
+}
+
+.stats-streak {
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  color: #d9584f;
+  background: rgba(217, 88, 79, 0.14);
+  white-space: nowrap;
 }
 
 .stats-toggle {

@@ -1,4 +1,4 @@
-﻿# 任务看板 Task Kanban
+# 任务看板 Task Kanban
 
 一个使用 **Vue 3 + Vite + localStorage** 实现的纯前端任务管理看板。支持三列拖拽流转、星标、紧急标记、分类、多主题、完成庆祝动画，以及按周统计的新增 / 完成节奏。
 
@@ -92,7 +92,7 @@ task-kanban-ai/
     └── useKanban.test.js
 ```
 
-## 每周统计
+## 每周统计（含连续打卡天数）
 
 统计逻辑位于 `src/utils/weeklyStats.js`，全部为纯函数，不依赖 Vue、DOM 或当前时间（`now` 可注入，便于测试）。
 

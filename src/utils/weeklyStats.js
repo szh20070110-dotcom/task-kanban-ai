@@ -1,4 +1,5 @@
 
+
 const DAY_LABELS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
 function addDays(date, days) {
@@ -28,6 +29,36 @@ function findDayIndex(daily, timestamp) {
 function percentageChange(current, previous) {
   if (previous === 0) return current === 0 ? 0 : 100
   return Math.round(((current - previous) / previous) * 100)
+}
+
+function dayKey(date) {
+  const d = new Date(date)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+// 连续打卡：从今天（或昨天）往回数，连续「有完成任务」的天数
+export function computeStreakDays(tasks, now = new Date()) {
+  const doneDays = new Set()
+  ;(tasks || []).forEach((task) => {
+    if (!task || !task.completedAt) return
+    const ts = new Date(task.completedAt)
+    if (!Number.isFinite(ts.getTime())) return
+    doneDays.add(dayKey(ts))
+  })
+  if (doneDays.size === 0) return 0
+
+  let cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  if (!doneDays.has(dayKey(cursor))) {
+    cursor = addDays(cursor, -1)
+    if (!doneDays.has(dayKey(cursor))) return 0
+  }
+
+  let streak = 0
+  while (doneDays.has(dayKey(cursor))) {
+    streak += 1
+    cursor = addDays(cursor, -1)
+  }
+  return streak
 }
 
 export function startOfWeek(input = new Date()) {
@@ -65,6 +96,7 @@ export function getWeeklyStats(tasks, now = new Date()) {
       created: 0,
       completed: 0,
       completionRate: 0,
+      streakDays: 0,
       previous: { created: 0, completed: 0 },
       change: { created: 0, completed: 0 },
       daily: [],
@@ -130,6 +162,7 @@ export function getWeeklyStats(tasks, now = new Date()) {
     created,
     completed,
     completionRate: total === 0 ? 0 : Math.round((done / total) * 100),
+    streakDays: computeStreakDays(safeTasks, now),
     previous: { created: previousCreated, completed: previousCompleted },
     change: {
       created: percentageChange(created, previousCreated),
