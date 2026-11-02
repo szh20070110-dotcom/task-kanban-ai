@@ -1,0 +1,73 @@
+const HOUR = 60 * 60 * 1000
+const DAY = 24 * HOUR
+
+export function createSeedTasks(now = Date.now()) {
+  return [
+    {
+      id: 'seed-1',
+      title: '梳理本周工作目标',
+      description: '把本周最重要的三件事写下来，排好优先级。',
+      category: '规划',
+      columnId: 'todo',
+      starred: true,
+      urgent: false,
+      createdAt: now - 2 * HOUR,
+      completedAt: null,
+    },
+    {
+      id: 'seed-2',
+      title: '修复登录页在小屏下的布局问题',
+      description: '检查 375px 宽度下按钮与表单的间距。',
+      category: '开发',
+      columnId: 'todo',
+      starred: false,
+      urgent: true,
+      createdAt: now - 5 * HOUR,
+      completedAt: null,
+    },
+    {
+      id: 'seed-3',
+      title: '设计新版任务卡片',
+      description: '补充星标与紧急状态的视觉区分。',
+      category: '设计',
+      columnId: 'doing',
+      starred: true,
+      urgent: false,
+      createdAt: now - DAY,
+      completedAt: null,
+    },
+    {
+      id: 'seed-4',
+      title: '整理本周站会纪要',
+      description: '汇总风险点，同步给项目成员。',
+      category: '协作',
+      columnId: 'doing',
+      starred: false,
+      urgent: false,
+      createdAt: now - 2 * DAY,
+      completedAt: null,
+    },
+    {
+      id: 'seed-5',
+      title: '搭建项目基础脚手架',
+      description: '完成 Vite + Vue3 初始化与目录约定。',
+      category: '开发',
+      columnId: 'done',
+      starred: false,
+      urgent: false,
+      createdAt: now - 3 * DAY,
+      completedAt: now - HOUR,
+    },
+    {
+      id: 'seed-6',
+      title: '明确看板验收标准',
+      description: '和团队确认三列流转与持久化范围。',
+      category: '规划',
+      columnId: 'done',
+      starred: true,
+      urgent: false,
+      createdAt: now - 6 * DAY,
+      completedAt: now - 3 * DAY,
+    },
+  ]
+}
